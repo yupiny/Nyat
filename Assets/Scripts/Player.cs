@@ -13,12 +13,17 @@ public class Player : MonoBehaviour
     private float vertical;
     private bool bRun;
 
+
     [SerializeField]
     private GameObject swordPrefab;
     private GameObject sword;
 
-    private GameObject holsterSword;
-    private GameObject handSword;
+    private Transform holsterSword;
+    private Transform handSword;
+
+    private bool bDrawing = false;
+    private bool bSheathing = false;
+    private bool bEquipped = false;
 
     Vector3 direction;
     
@@ -30,11 +35,20 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        Transform holsterSword = GameObject.Find("Holster_Sword").transform;
+        holsterSword = GameObject.Find("Holster_Sword").transform;
         if (holsterSword != null)
         {
             sword = Instantiate<GameObject>(swordPrefab, holsterSword, false);  
         }
+
+        handSword = GameObject.Find("Hand_Sword").transform;
+
+    }
+    
+    private void Update()
+    {
+        UpdateMoving();
+        UpdateDraw();
     }
     private void UpdateMoving()
     {
@@ -49,8 +63,28 @@ public class Player : MonoBehaviour
         animator.SetFloat("SpeedX", direction.x);
         animator.SetFloat("SpeedZ", direction.z);
     }
-    private void Update()
+
+    private void UpdateDraw()
     {
-        UpdateMoving();
+        if (Input.GetButtonDown("Draw") == false)
+            return;
+
+        animator.SetTrigger("IsDraw");
     }
+
+    private void BeginDraw()
+    {
+        sword.transform.parent.DetachChildren();
+
+        sword.transform.position = new Vector3(0, 0, 0);
+        sword.transform.rotation = Quaternion.identity;
+
+        sword.transform.SetParent(handSword, false);
+    }
+
+    private void EndDraw()
+    {
+        animator.SetBool("HasSword", true);
+    }
+    
 }
