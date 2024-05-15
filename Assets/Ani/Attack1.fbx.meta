@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: be3422d2abe66474fa3642e3ef29bb49
+guid: 4cf48b23e1cf1b642a4f7d90933dbba3
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sheath Sword 2
+      name: Attack1
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 25
+      lastFrame: 45
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -57,15 +57,22 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.0852459
-        functionName: BeginUnequip
+      - time: 0.3724426
+        functionName: Begin_Collision
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.17704919
-        functionName: EndUnequip
+      - time: 0.59674275
+        functionName: End_Collision
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.957377
+        functionName: EndAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}
         floatParameter: 0
