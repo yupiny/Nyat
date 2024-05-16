@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class Sparrow : MonoBehaviour, IDamagable
 {
+    private float hp;
+
     private Animator animator;
     public void Damage(GameObject attacker, Sword causer, float power)
     {
+        hp = hp - power;
+
+        if(hp<=0)
+        {
+            animator.SetTrigger("Death");
+            Destroy(gameObject, 3f); return;
+        }
+
         animator.SetTrigger("Damaged");
     }
     private void Awake()
@@ -16,7 +26,7 @@ public class Sparrow : MonoBehaviour, IDamagable
     // Start is called before the first frame update
     void Start()
     {
-        
+        hp = 80;
     }
 
     
