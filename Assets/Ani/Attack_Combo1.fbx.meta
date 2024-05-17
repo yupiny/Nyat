@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4cf48b23e1cf1b642a4f7d90933dbba3
+guid: 8713ab672a241464e89df0d69c98f080
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack1
+      name: Attack_Combo1
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 45
+      lastFrame: 75
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -57,42 +57,42 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.2334812
+      - time: 0.15500945
         functionName: Begin_Combo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.3724426
+      - time: 0.25238296
         functionName: Begin_Collision
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.59674275
+      - time: 0.50692886
         functionName: End_Collision
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.6742549
+      - time: 0.63737106
         functionName: End_Combo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.83285034
+      - time: 0.84499055
         functionName: Combo_Attack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.9687191
+      - time: 0.93502045
         functionName: End_Attack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}

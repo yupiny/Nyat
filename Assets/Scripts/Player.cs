@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -29,6 +30,9 @@ public class Player : MonoBehaviour
     private bool bAttacking = false;
     //private bool bcanMove = false;
 
+    private bool bComboEnable;
+    private bool bComboExist;
+
     Vector3 direction;
 
     private Animator animator;
@@ -56,6 +60,8 @@ public class Player : MonoBehaviour
         UpdateDraw();
         UpdateAttack();
     }
+
+#region Move
     private void UpdateMoving()
     {
         if (bAttacking)
@@ -72,7 +78,9 @@ public class Player : MonoBehaviour
         animator.SetFloat("SpeedX", direction.x);
         animator.SetFloat("SpeedZ", direction.z);
     }
+    #endregion
 
+#region Draw
     private void UpdateDraw()
     {
         if (Input.GetButtonDown("Draw") == false)
@@ -136,6 +144,9 @@ public class Player : MonoBehaviour
         bSheathing = false;
         animator.SetBool("UnhasSword", false);
     }
+    #endregion
+
+    #region Attack
     private void UpdateAttack()
     {
         if (Input.GetButtonDown("Attack") == false)
@@ -150,20 +161,42 @@ public class Player : MonoBehaviour
         if (bEquipped == false)
             return;
 
-        if (bAttacking == true)
-            return;
-
-        if (bEquipped == true)
+        if (bComboEnable)
         {
-            bAttacking = true; //공격중
-            animator.SetBool("IsAttacking", true); //공격 애니메이션 실행
+            bComboEnable = false;
+            bComboExist = true;
 
             return;
         }
 
+        if (bAttacking == true)
+            return;
+
+        
+        bAttacking = true; //공격중
+        animator.SetBool("IsAttacking", true); //공격 애니메이션 실행
+        
     }
 
-    private void EndAttack()
+    private void Begin_Combo()
+    {
+        bComboEnable = true;
+    }
+    private void End_Combo()
+    {
+        bComboEnable = false;
+    }
+
+    private void Combo_Attack()
+    {
+        if (bComboExist == false)
+            return;
+
+        bComboExist = false;
+
+        animator.SetTrigger("Combo");
+    }
+    private void End_Attack()
     {
         bAttacking = false;
         animator.SetBool("IsAttacking", false);
@@ -178,5 +211,6 @@ public class Player : MonoBehaviour
     {
         sword.End_Collision();
     }
+    #endregion
 }
 

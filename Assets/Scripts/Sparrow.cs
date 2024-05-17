@@ -14,7 +14,7 @@ public class Sparrow : MonoBehaviour, IDamagable
         if(hp<=0)
         {
             animator.SetTrigger("Death");
-            Destroy(gameObject, 3f); return;
+            Destroy(gameObject, 2f); return;
         }
 
         animator.SetTrigger("Damaged");
