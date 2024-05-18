@@ -85,7 +85,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.83285034
+      - time: 0.78597534
         functionName: Combo_Attack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: ca2eee62f5d3b1146b546240c839783e, type: 3}
