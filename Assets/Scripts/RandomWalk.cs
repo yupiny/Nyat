@@ -43,6 +43,10 @@ public partial class Sparrow
                     transform.rotation = rotation;
                 }
 
+                if (dead)
+                    break;
+                    
+
                 transform.position += transform.forward * speed;
                 animator.SetFloat("SpeedX", 2);
                 animator.SetFloat("SpeedY", move);

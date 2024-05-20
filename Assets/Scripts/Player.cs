@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     private float vertical;
     private bool bRun;
 
-
+    
     [SerializeField]
     private GameObject swordPrefab;
     private GameObject swordClone;
