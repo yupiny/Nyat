@@ -43,8 +43,9 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     
     private void Update()
     {
-        Attack();
-        PlayerTracker(); // 플레이어 따라가는 기능
+        //Attack();
+        PlayerTracker();
+        TargetDeath();// 플레이어 따라가는 기능
 
     }
     private void Attack()
@@ -54,6 +55,8 @@ public partial class Sparrow : MonoBehaviour, IDamagable
 
         if (targetObject == null)
             return;
+
+        if(targetObject)
 
         //float d = Vector3.Distance(targetObject.transform.position, transform.position);
         //Debug.Log("거리 차이 : " + d);
@@ -79,6 +82,16 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         // 
     }
 
+    private void TargetDeath()
+    {
+        if (targetObject != null)
+        {
+            Attack();
+        }
+
+        else
+            targetObject = null;
+    }
 
 
     private void PlayerTracker()

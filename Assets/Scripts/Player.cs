@@ -47,8 +47,13 @@ public class Player : MonoBehaviour, IDamagable
         if (hp <= 0)
         {
             dead = true;
-            //animator.SetTrigger("Death");
-            Destroy(gameObject, 2f); return;
+            animator.SetBool("Death", true);
+            Destroy(gameObject, 3f); return;
+        }
+
+        if(dead)
+        {
+            attacker = null;
         }
 
         hitted = true;
@@ -57,7 +62,11 @@ public class Player : MonoBehaviour, IDamagable
         Quaternion rotation = Quaternion.LookRotation(lookPlayer.normalized, Vector3.up);
         this.transform.rotation = rotation;
 
-        //animator.SetTrigger("Damaged");
+        animator.SetTrigger("Hitted");
+    }
+    public bool Dead()
+    {
+        return dead;
     }
     private void Awake()
     {
