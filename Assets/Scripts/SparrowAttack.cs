@@ -3,11 +3,46 @@ using UnityEngine;
 public class SparrowAttack : MonoBehaviour
 {
     // damgae 인터페이스 상속 받고 OnDamge 구현
-    // 본인 콜라이더 끄는, 키는 기능
-    // 플레이어 hp 만들기 , dead 만들기
+    // 본인 콜라이더 끄는, 키는 기능 o
+    // 플레이어 hp 만들기 , dead 만들기 피
     // 
-   private void Start ()
+
+    private Collider sparrowCollider;
+
+    private void Awake()
+    {
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach(Collider collider in colliders) 
+        {
+            if(collider.gameObject.name.Equals("Sparrow_collider"))
+            {
+                sparrowCollider= collider;
+                break;
+            }
+        }
+    }
+
+    private void Start ()
    {
       
    }
+
+     private void OnTriggerEnter(Collider other)
+    {
+        if (gameObject == other.gameObject)
+            return;
+
+        IDamagable damage = other.gameObject.GetComponent<IDamagable>();
+        damage?.Damage(gameObject, 20);
+    }
+
+    public void Begin_Collision()
+    {
+        sparrowCollider.enabled = true;
+    }
+
+    public void End_Collision()
+    {
+        sparrowCollider.enabled = false;
+    }
 }

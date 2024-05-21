@@ -24,7 +24,7 @@ public class Sword : MonoBehaviour
             return;
 
         IDamagable damage = other.gameObject.GetComponent<IDamagable>();
-        damage?.Damage(rootObject, this, 20);
+        damage?.Damage(rootObject, 20);
     }
 
         public void Begin_Collision()

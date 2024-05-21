@@ -8,14 +8,15 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     private float hp;
     public bool dead;
     public bool hitted;
-    private bool attacking;
+    public bool attacking= false;
     public float radius;
     private Vector3 offset = Vector3.zero;
     private GameObject targetObject;
     private bool hasTarget;
+    
 
     private Animator animator;
-    public void Damage(GameObject attacker, Sword causer, float power)
+    public void Damage(GameObject attacker, float power)
     {
         hp = hp - power;
 
@@ -48,6 +49,28 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     }
     private void Attack()
     {
+        if(attacking == true)
+            return;
+
+        if (targetObject == null)
+            return;
+
+        //float d = Vector3.Distance(targetObject.transform.position, transform.position);
+        //Debug.Log("거리 차이 : " + d);
+
+
+        if (Vector3.Distance(targetObject.transform.position, transform.position) <= 0.7f)
+        {
+            attacking = true;
+            animator.SetTrigger("Attack");
+
+            return;
+        }
+
+        if(Vector3.Distance(targetObject.transform.position, transform.position) > 1f)
+        {
+            attacking = false;
+        }
         // 만약에 거리가 가깝다면.
         // attacking을 true로
         // 공격 애니
@@ -61,6 +84,9 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     private void PlayerTracker()
     {
         if (dead)
+            return;
+
+        if (attacking == true)
             return;
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius, 1 << 6);

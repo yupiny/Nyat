@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamagable
 {
     [SerializeField]
     private float walkSpeed = 2.0f;
@@ -35,7 +35,30 @@ public class Player : MonoBehaviour
 
     Vector3 direction;
 
+    private float hp;
+    public bool dead;
+    public bool hitted;
+
     private Animator animator;
+    public void Damage(GameObject attacker, float power)
+    {
+        hp = hp - power;
+
+        if (hp <= 0)
+        {
+            dead = true;
+            //animator.SetTrigger("Death");
+            Destroy(gameObject, 2f); return;
+        }
+
+        hitted = true;
+
+        Vector3 lookPlayer = attacker.transform.position - this.transform.position;
+        Quaternion rotation = Quaternion.LookRotation(lookPlayer.normalized, Vector3.up);
+        this.transform.rotation = rotation;
+
+        //animator.SetTrigger("Damaged");
+    }
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -43,6 +66,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        hp = 80;
         holsterSword = GameObject.Find("Holster_Sword").transform;
         if (holsterSword != null)
         {

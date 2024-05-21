@@ -19,7 +19,7 @@ public partial class Sparrow
 
         while (true)
         {
-            if (hitted == false)
+            if (hitted == false && attacking == false)
             {
                 if (Vector3.Distance(moveToPosition, transform.position) < 0.1f) //µµ´Þ
                 {
@@ -68,5 +68,10 @@ public partial class Sparrow
         float z = Random.Range(-10.0f, 10.0f);
 
         return new Vector3(x, 0 ,z);
+    }
+
+    public void End_Attack()
+    {
+        attacking = false;
     }
 }
