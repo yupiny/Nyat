@@ -24,7 +24,7 @@ public class SparrowAttack : MonoBehaviour
 
     private void Start ()
    {
-      
+        End_Collision();
    }
 
      private void OnTriggerEnter(Collider other)

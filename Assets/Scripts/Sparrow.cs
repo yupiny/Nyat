@@ -13,6 +13,11 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     private Vector3 offset = Vector3.zero;
     private GameObject targetObject;
     private bool hasTarget;
+
+    private float attackCooldown = 2f;
+    private float lastAttackTime;
+
+    private GameObject playerobj;
     Player player;
 
     private Animator animator;
@@ -45,11 +50,14 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     {
         //Attack();
         PlayerTracker();// 플레이어 따라가는 기능
-
-    }
-    private void FixedUpdate()
-    {
         TargetDeath();
+    }
+    private void TargetDeath()
+    {
+        if (targetObject != null)
+        {
+            Attack();
+        }
     }
     private void Attack()
     {
@@ -62,36 +70,22 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         if (player.dead)
             return;
 
-            if (Vector3.Distance(targetObject.transform.position, transform.position) <= 0.7f  )
+        if (Vector3.Distance(targetObject.transform.position, transform.position) <= 0.7f)
         {
-            attacking = true;
-            animator.SetTrigger("Attack");
-
-            return;
+            if (Time.time >= lastAttackTime + attackCooldown)
+            {
+                attacking = true;
+                lastAttackTime = Time.time; // 마지막 공격 시간 업데이트
+                animator.SetTrigger("Attack");
+                return;
+            }
         }
 
-        if(Vector3.Distance(targetObject.transform.position, transform.position) > 1f)
+        if (Vector3.Distance(targetObject.transform.position, transform.position) > 1f)
         {
             attacking = false;
         }
-        // 만약에 거리가 가깝다면.
-        // attacking을 true로
-        // 공격 애니
-        // SparrowAttack 스크립트에 구현되어 있는 콜라이더 키는 함수 실행하기(애니메이션 event)
-        // SparrowAttack 스크립트에 구현되어 있는 콜라이더 끄는 함수 실행하기(애니메이션 event)
-        // 
     }
-
-    private void TargetDeath()
-    {
-        if (targetObject != null)
-        {
-            Attack();
-        }
-
-    }
-
-
     private void PlayerTracker()
     {
         if (dead)
@@ -121,14 +115,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
 
         if (Vector3.Distance(targetObject.transform.position, transform.position) > radius + 2 && hasTarget)//멀어지면 트루
         {
-            moveToPosition = GetRandomPosition();
-
-            Vector3 look = moveToPosition - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(look.normalized, Vector3.up);
-            transform.rotation = rotation;
-
-            targetObject = null;
-            hasTarget = false;
+            MoveToRandomPositionAndResetTarget();
         }
 
         if (targetObject != null)
@@ -138,7 +125,20 @@ public partial class Sparrow : MonoBehaviour, IDamagable
             this.transform.rotation = rotation;
         }
     }
-    
+
+    private void MoveToRandomPositionAndResetTarget()
+    {
+        moveToPosition = GetRandomPosition();
+
+        Vector3 look = moveToPosition - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(look.normalized, Vector3.up);
+        transform.rotation = rotation;
+
+        targetObject = null;
+        hasTarget = false;
+    }
+
+
     private void End_Hitted()
     {
         hitted = false;
