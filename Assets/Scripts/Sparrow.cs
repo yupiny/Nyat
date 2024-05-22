@@ -13,7 +13,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     private Vector3 offset = Vector3.zero;
     private GameObject targetObject;
     private bool hasTarget;
-    
+    Player player;
 
     private Animator animator;
     public void Damage(GameObject attacker, float power)
@@ -44,25 +44,25 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     private void Update()
     {
         //Attack();
-        PlayerTracker();
-        TargetDeath();// 플레이어 따라가는 기능
+        PlayerTracker();// 플레이어 따라가는 기능
 
+    }
+    private void FixedUpdate()
+    {
+        TargetDeath();
     }
     private void Attack()
     {
-        if(attacking == true)
+        if (attacking == true)
             return;
 
         if (targetObject == null)
             return;
 
-        if(targetObject)
+        if (player.dead)
+            return;
 
-        //float d = Vector3.Distance(targetObject.transform.position, transform.position);
-        //Debug.Log("거리 차이 : " + d);
-
-
-        if (Vector3.Distance(targetObject.transform.position, transform.position) <= 0.7f)
+            if (Vector3.Distance(targetObject.transform.position, transform.position) <= 0.7f  )
         {
             attacking = true;
             animator.SetTrigger("Attack");
@@ -89,8 +89,6 @@ public partial class Sparrow : MonoBehaviour, IDamagable
             Attack();
         }
 
-        else
-            targetObject = null;
     }
 
 

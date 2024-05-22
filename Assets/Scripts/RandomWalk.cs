@@ -7,6 +7,7 @@ public partial class Sparrow
     private Vector3 moveToPosition;
     void Start()
     {
+        player = GameObject.Find("Player").GetComponent<Player>();  
         hp = 80;
         StartCoroutine(MoveTo());
     }

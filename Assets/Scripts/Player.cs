@@ -47,13 +47,9 @@ public class Player : MonoBehaviour, IDamagable
         if (hp <= 0)
         {
             dead = true;
+            Debug.Log(dead);
             animator.SetBool("Death", true);
             Destroy(gameObject, 3f); return;
-        }
-
-        if(dead)
-        {
-            attacker = null;
         }
 
         hitted = true;
@@ -64,10 +60,7 @@ public class Player : MonoBehaviour, IDamagable
 
         animator.SetTrigger("Hitted");
     }
-    public bool Dead()
-    {
-        return dead;
-    }
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
