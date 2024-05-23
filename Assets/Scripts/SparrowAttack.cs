@@ -8,6 +8,7 @@ public class SparrowAttack : MonoBehaviour
     // 
 
     private Collider sparrowCollider;
+    LayerMask spaarowLayerMask;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class SparrowAttack : MonoBehaviour
                 break;
             }
         }
+        spaarowLayerMask = LayerMask.GetMask("Sparrow");
     }
 
     private void Start ()
@@ -30,6 +32,8 @@ public class SparrowAttack : MonoBehaviour
      private void OnTriggerEnter(Collider other)
     {
         if (gameObject == other.gameObject)
+            return;
+        if(other.gameObject.layer == LayerMask.NameToLayer("Sparrow"))
             return;
 
         IDamagable damage = other.gameObject.GetComponent<IDamagable>();

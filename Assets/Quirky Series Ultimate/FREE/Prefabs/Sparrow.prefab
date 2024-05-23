@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &66609011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 66609012}
+  - component: {fileID: 66609013}
+  m_Layer: 0
+  m_Name: Sparrow_collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &66609012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66609011}
+  m_LocalRotation: {x: -3.4917585e-14, y: -1, z: -0, w: 0.00000011920929}
+  m_LocalPosition: {x: 0, y: 0.007417959, z: 0.00600459}
+  m_LocalScale: {x: 0.015625002, y: 0.015625002, z: 0.015625002}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3150724663689900268}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &66609013
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66609011}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &377257497897257327
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +498,8 @@ GameObject:
   - component: {fileID: 6788538757290762320}
   - component: {fileID: 800442542}
   - component: {fileID: 800442547}
-  m_Layer: 0
+  - component: {fileID: 805622373}
+  m_Layer: 7
   m_Name: Sparrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,7 +622,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dead: 0
   hitted: 0
+  attacking: 0
   radius: 2.5
+--- !u!114 &805622373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6788538757290762323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb95323458e16e478d6d41b716532f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6788538757856321312
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,6 +893,7 @@ Transform:
   - {fileID: 449101735548798748}
   - {fileID: 4646810017818976585}
   - {fileID: 5193446744841855781}
+  - {fileID: 66609012}
   m_Father: {fileID: 3359742809110561920}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

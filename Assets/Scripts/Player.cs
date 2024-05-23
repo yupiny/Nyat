@@ -47,6 +47,10 @@ public class Player : MonoBehaviour, IDamagable
         if (hp <= 0)
         {
             dead = true;
+            //가장 쉬운 방법은 이때 참새 좌표 새로 구하게 하기
+            //  MoveToRandomPositionAndResetTarget(); 호출하기
+            // 근데 코드가 추가되면 더러워져서 델리게이트 쓰라고 한건데 나중에 그때 변경하면 될듯
+            UIManager.Instance.GameOverTextUpdate(true);
             Debug.Log(dead);
             animator.SetBool("Death", true);
             Destroy(gameObject, 3f); return;
@@ -82,9 +86,20 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Update()
     {
+        if (dead)
+            return;
+
+        if (hitted)
+            return;
+
         UpdateMoving();
         UpdateDraw();
         UpdateAttack();
+    }
+    private void End_Hitted()
+    {
+        hitted = false;
+
     }
 
 #region Move
@@ -172,7 +187,7 @@ public class Player : MonoBehaviour, IDamagable
     }
     #endregion
 
-    #region Attack
+#region Attack
     private void UpdateAttack()
     {
         if (Input.GetButtonDown("Attack") == false)
@@ -201,7 +216,6 @@ public class Player : MonoBehaviour, IDamagable
         
         bAttacking = true; //공격중
         animator.SetBool("IsAttacking", true); //공격 애니메이션 실행
-        
     }
 
     private void Begin_Combo()

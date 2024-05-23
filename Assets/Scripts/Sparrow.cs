@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -21,6 +22,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     Player player;
 
     private Animator animator;
+#region Damage
     public void Damage(GameObject attacker, float power)
     {
         hp = hp - power;
@@ -40,6 +42,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         
         animator.SetTrigger("Damaged");
     }
+#endregion
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -48,6 +51,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     
     private void Update()
     {
+        Debug.Log(attacking);
         //Attack();
         PlayerTracker();// 플레이어 따라가는 기능
         TargetDeath();
@@ -72,7 +76,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
 
         if (Vector3.Distance(targetObject.transform.position, transform.position) <= 0.7f)
         {
-            if (Time.time >= lastAttackTime + attackCooldown)
+            if (IsAttackDelayOver())
             {
                 attacking = true;
                 lastAttackTime = Time.time; // 마지막 공격 시간 업데이트
@@ -80,12 +84,15 @@ public partial class Sparrow : MonoBehaviour, IDamagable
                 return;
             }
         }
-
-        if (Vector3.Distance(targetObject.transform.position, transform.position) > 1f)
-        {
-            attacking = false;
-        }
     }
+    public bool IsAttackDelayOver()
+    {
+        if (Time.time >= lastAttackTime + attackCooldown)
+            return true;
+        else
+            return false;
+    }
+#region   PlayerTracker
     private void PlayerTracker()
     {
         if (dead)
@@ -125,8 +132,8 @@ public partial class Sparrow : MonoBehaviour, IDamagable
             this.transform.rotation = rotation;
         }
     }
-
-    private void MoveToRandomPositionAndResetTarget()
+    #endregion
+    private void MoveToRandomPositionAndResetTarget() //랜덤위치 재설정
     {
         moveToPosition = GetRandomPosition();
 

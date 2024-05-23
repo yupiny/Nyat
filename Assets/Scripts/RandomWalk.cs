@@ -21,7 +21,8 @@ public partial class Sparrow
 
         while (true)
         {
-            if (hitted == false && attacking == false)
+            // 맞은 상태가 아니면서 , 공격중이 아니고 , 공격 딜레이 중이 아니라면
+            if (hitted == false && attacking == false && IsAttackDelayOver())
             {
                 if (Vector3.Distance(moveToPosition, transform.position) < 0.1f) //도달
                 {
@@ -71,6 +72,7 @@ public partial class Sparrow
 
         return new Vector3(x, 0 ,z);
     }
+
 
     public void End_Attack()
     {
