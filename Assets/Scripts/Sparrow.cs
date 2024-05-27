@@ -158,4 +158,10 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         Gizmos.DrawWireSphere(position, radius);
     }
 
+    // 객체가 파괴될때 자동 1회 호출
+    private void OnDestroy()
+    {
+        GameManager.Instance.SetSparrow(-1);
+    }
+
 }

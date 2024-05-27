@@ -3,7 +3,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject gameOverText;
+    [SerializeField]
+    private GameObject gameOverText;
+    [SerializeField]
+    private GameObject gameClearText;
 
     private static UIManager m_instance;
     public static UIManager Instance
@@ -23,14 +26,13 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void Start ()
-   {
-      
-   }
-
     public void GameOverTextUpdate(bool value)
     {
         gameOverText.SetActive(value);
     }
 
+    public void GameClearTextUpdate(bool value)
+    {
+        gameClearText.SetActive(value);
+    }
 }

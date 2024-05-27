@@ -138,12 +138,13 @@ public class Player : MonoBehaviour, IDamagable
         {
             bDrawing = true; //검을 뽑는중으로 바꿈
             animator.SetBool("HasSword", bDrawing); //검뽑는 애니메이션 실행
-
+            animator.SetBool("SwordInHand", true);
             return;
         }
 
         bSheathing = true;
         animator.SetBool("UnhasSword", bSheathing);
+        animator.SetBool("SwordInHand", false);
     }
 
     private void BeginDraw()

@@ -11,6 +11,7 @@ public partial class Sparrow
         player = GameObject.Find("Player").GetComponent<Player>();  
         hp = 80;
         StartCoroutine(MoveTo());
+        GameManager.Instance.SetSparrow(1);
     }
     private IEnumerator MoveTo()
     {
