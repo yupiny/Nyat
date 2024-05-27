@@ -39,6 +39,7 @@ public class Player : MonoBehaviour, IDamagable
     public bool dead;
     public bool hitted;
 
+    private Collider playerCollider;
     private Animator animator;
     public void Damage(GameObject attacker, float power)
     {
@@ -99,10 +100,14 @@ public class Player : MonoBehaviour, IDamagable
     private void End_Hitted()
     {
         hitted = false;
-
     }
 
-#region Move
+    public void Player_End_Collision()
+    {
+        playerCollider.enabled = false;
+    }
+
+    #region Move
     private void UpdateMoving()
     {
         if (bAttacking)

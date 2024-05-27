@@ -347,6 +347,20 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.07860262
+        functionName: End_Collision
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: d309f53cfc539c340be10c37848d3545, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.11790393
+        functionName: End_Attack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: d309f53cfc539c340be10c37848d3545, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

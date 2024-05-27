@@ -71,6 +71,9 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         if (targetObject == null)
             return;
 
+        if (hitted == true)
+            return;
+
         if (player.dead)
             return;
 
@@ -145,6 +148,10 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         hasTarget = false;
     }
 
+    public void End_Attack()
+    {
+        attacking = false;
+    }
 
     private void End_Hitted()
     {

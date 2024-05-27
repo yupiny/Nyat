@@ -73,10 +73,4 @@ public partial class Sparrow
 
         return new Vector3(x, 0 ,z);
     }
-
-
-    public void End_Attack()
-    {
-        attacking = false;
-    }
 }
