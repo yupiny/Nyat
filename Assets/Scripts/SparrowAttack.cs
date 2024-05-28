@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SparrowAttack : MonoBehaviour
@@ -7,33 +8,37 @@ public class SparrowAttack : MonoBehaviour
     // 플레이어 hp 만들기 , dead 만들기 피
     // 
 
-    private Collider sparrowCollider;
+    private List<Collider> sparrowColliders;
+    private Collider sparrowAttackCollider;
     LayerMask spaarowLayerMask;
 
     private void Awake()
     {
+        sparrowColliders = new List<Collider>();
         Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach(Collider collider in colliders) 
+        foreach (Collider collider in colliders)
         {
-            if(collider.gameObject.name.Equals("Sparrow_collider"))
+            sparrowColliders.Add(collider);
+
+            if (collider.gameObject.name.Equals("Sparrow_collider"))
             {
-                sparrowCollider= collider;
+                sparrowAttackCollider = collider;
                 break;
             }
         }
         spaarowLayerMask = LayerMask.GetMask("Sparrow");
     }
 
-    private void Start ()
-   {
+    private void Start()
+    {
         End_Collision();
-   }
+    }
 
-     private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (gameObject == other.gameObject)
             return;
-        if(other.gameObject.layer == LayerMask.NameToLayer("Sparrow"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Sparrow"))
             return;
 
         IDamagable damage = other.gameObject.GetComponent<IDamagable>();
@@ -42,11 +47,20 @@ public class SparrowAttack : MonoBehaviour
 
     public void Begin_Collision()
     {
-        sparrowCollider.enabled = true;
+        sparrowAttackCollider.enabled = true;
     }
 
     public void End_Collision()
     {
-        sparrowCollider.enabled = false;
+        sparrowAttackCollider.enabled = false;
+    }
+
+    //참새가 죽을때 호출되는 애니메이션 이벤트
+    public void Sparrow_End_Collision()
+    {
+        foreach (Collider collider in sparrowColliders)
+        {
+            collider.enabled = false;
+        }
     }
 }
