@@ -68,6 +68,13 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Awake()
     {
+        Collider[] colliders = GetComponentsInChildren<Collider>();
+        foreach (Collider collider in colliders)
+        {
+            playerCollider = collider;
+            break;
+        }
+        
         animator = GetComponent<Animator>();
     }
 
@@ -107,7 +114,7 @@ public class Player : MonoBehaviour, IDamagable
         playerCollider.enabled = false;
     }
 
-    #region Move
+#region Move
     private void UpdateMoving()
     {
         if (bAttacking)
