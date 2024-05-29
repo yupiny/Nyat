@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public partial class Sparrow : MonoBehaviour, IDamagable
 {
@@ -20,14 +21,16 @@ public partial class Sparrow : MonoBehaviour, IDamagable
 
     private GameObject playerobj;
     Player player;
+    private Rigidbody rigidbody;
 
     private Animator animator;
 #region Damage
     public void Damage(GameObject attacker, float power)
     {
         hp = hp - power;
+        PushBack();
 
-        if(hp<=0)
+        if (hp<=0)
         {
             dead = true;
             animator.SetTrigger("Death");
@@ -45,6 +48,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
 #endregion
     private void Awake()
     {
+        rigidbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
     // Start is called before the first frame update
@@ -63,6 +67,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
             Attack();
         }
     }
+#region Attack
     private void Attack()
     {
         if (attacking == true)
@@ -95,6 +100,8 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         else
             return false;
     }
+#endregion
+
 #region   PlayerTracker
     private void PlayerTracker()
     {
@@ -156,6 +163,18 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     private void End_Hitted()
     {
         hitted = false;
+    }
+    private void PushBack()
+    {
+        rigidbody.isKinematic = false;
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.AddForce(transform.forward * -1f * 20, ForceMode.Force);
+        CancelInvoke("IsKinematicTrue");
+        Invoke("IsKinematicTrue", 0.3f);
+    }
+    private void IsKinematicTrue()
+    {
+        rigidbody.isKinematic = true;
     }
 
     private void OnDrawGizmos()

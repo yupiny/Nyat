@@ -6,9 +6,11 @@ public class Sword : MonoBehaviour
 {
     private Collider swordCollider;
     private GameObject rootObject;
+    private List<GameObject> gameObjList;
 
     private void Awake()
     {
+        gameObjList = new List<GameObject>();
         swordCollider = GetComponent<Collider>();
         rootObject = transform.root.gameObject;
     }
@@ -23,6 +25,13 @@ public class Sword : MonoBehaviour
         if (rootObject == other.gameObject)
             return;
 
+        // 만약에 리스트에 없다면 리스트에 넣어준다.
+        // 만약에 리스트에 있었다면 return해서 밑에 데미지 주는 함수를 호출하지 않는다. 
+        if (gameObjList.Contains(other.gameObject))
+            return;
+
+        gameObjList.Add(other.gameObject);
+
         IDamagable damage = other.gameObject.GetComponent<IDamagable>();
         damage?.Damage(rootObject, 20);
     }
@@ -36,6 +45,6 @@ public class Sword : MonoBehaviour
     {
         swordCollider.enabled = false;
 
-       // hittedList.Clear();
+        gameObjList.Clear();
     }
 }
