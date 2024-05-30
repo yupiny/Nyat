@@ -13,6 +13,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     public bool attacking= false;
     public float radius;
     private Vector3 offset = Vector3.zero;
+    [SerializeField]
     private GameObject targetObject;
     private bool hasTarget;
 
@@ -52,10 +53,10 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         animator = GetComponent<Animator>();
     }
     // Start is called before the first frame update
-    
+
     private void Update()
     {
-        Debug.Log(attacking);
+        //Debug.Log(attacking);
         //Attack();
         PlayerTracker();// 플레이어 따라가는 기능
         TargetDeath();
@@ -100,9 +101,11 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         else
             return false;
     }
-#endregion
+    #endregion
 
-#region   PlayerTracker
+
+    #region   PlayerTracker
+    private Transform playerLastPosition;
     private void PlayerTracker()
     {
         if (dead)
@@ -112,11 +115,21 @@ public partial class Sparrow : MonoBehaviour, IDamagable
             return;
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius, 1 << 6);
-        foreach (Collider collider in colliders)
+        Debug.Log("colliders 탐색" + colliders.Length);
+        if (colliders.Length == 0)
         {
-            targetObject = collider.gameObject;
-            hasTarget = true;
+            hasTarget = false;
+            targetObject = null;
         }
+        else
+        { 
+            foreach (Collider collider in colliders)
+            {
+                targetObject = collider.gameObject;
+                hasTarget = true;
+            }
+        }
+
 
         if (targetObject == null)
             return;
@@ -130,23 +143,26 @@ public partial class Sparrow : MonoBehaviour, IDamagable
             return;
         }
 
+        // 플레이어가 죽으면 그 위치는 고정이고, 참새는 멀어지면서 새로 위치를 구하려고 했으나
+        // 플레이어가 죽어서 targetObject가 null이되어 transform.position 자체를 구하지도 못하고
+        // 위에서 return해서 아예 이쪽으로 들어오지도 않는다.
+        // 플레이어의 살아있을 때 위치정보를 계속 업데이트 하다가
+        // 플레이어가 죽으면 위치정보 업데이트 하지 않으면 플레이어의 마지막 위치정보만 남고
+        // 참새는 그 위치정보를 토대로 멀어지는지 밑에서 조건검사하다가 멀어지면 
+        // 위치를 새로 구하면 된다.
         if (Vector3.Distance(targetObject.transform.position, transform.position) > radius + 2 && hasTarget)//멀어지면 트루
         {
             MoveToRandomPositionAndResetTarget();
         }
-
-        if (targetObject != null)
-        {
             Vector3 lookPlayer = targetObject.transform.position - this.transform.position;
             Quaternion rotation = Quaternion.LookRotation(lookPlayer.normalized, Vector3.up);
             this.transform.rotation = rotation;
-        }
     }
     #endregion
     private void MoveToRandomPositionAndResetTarget() //랜덤위치 재설정
     {
         moveToPosition = GetRandomPosition();
-
+        Debug.Log(moveToPosition);
         Vector3 look = moveToPosition - transform.position;
         Quaternion rotation = Quaternion.LookRotation(look.normalized, Vector3.up);
         transform.rotation = rotation;
@@ -177,11 +193,17 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         rigidbody.isKinematic = true;
     }
 
+    private void OnDisable()
+    {
+        player.OnDie -= MoveToRandomPositionAndResetTarget;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Vector3 position = transform.position + offset;
         Gizmos.DrawWireSphere(position, radius);
+        Gizmos.DrawWireSphere(moveToPosition, radius);
     }
 
     // 객체가 파괴될때 자동 1회 호출

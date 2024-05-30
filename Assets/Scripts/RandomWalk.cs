@@ -8,7 +8,8 @@ public partial class Sparrow
     void Start()
     {
         playerobj = GameObject.Find("Player");
-        player = GameObject.Find("Player").GetComponent<Player>();  
+        player = GameObject.Find("Player").GetComponent<Player>();
+        player.OnDie += MoveToRandomPositionAndResetTarget;
         hp = 80;
         StartCoroutine(MoveTo());
         GameManager.Instance.SetSparrow(1);

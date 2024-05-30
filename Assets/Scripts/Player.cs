@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour, IDamagable
     private float horizontal;
     private float vertical;
     private bool bRun;
-
+    public Action OnDie;
     
     [SerializeField]
     private GameObject swordPrefab;
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour, IDamagable
     public bool dead;
     public bool hitted;
 
-    private Collider playerCollider;
+    private Collider[] playerCollider;
     private Animator animator;
     public void Damage(GameObject attacker, float power)
     {
@@ -48,11 +49,14 @@ public class Player : MonoBehaviour, IDamagable
         if (hp <= 0)
         {
             dead = true;
+            if (OnDie != null)
+                OnDie.Invoke();
             //가장 쉬운 방법은 이때 참새 좌표 새로 구하게 하기
             //  MoveToRandomPositionAndResetTarget(); 호출하기
-            // 근데 코드가 추가되면 더러워져서 델리게이트 쓰라고 한건데 나중에 그때 변경하면 될듯
+            // 근데 코드가 추가되면 더러워져서 델리게이트 쓰라고 한건데 나중에 그때 변경
             UIManager.Instance.GameOverTextUpdate(true);
             Debug.Log(dead);
+            Player_End_Collision();
             animator.SetBool("Death", true);
             Destroy(gameObject, 3f); return;
         }
@@ -68,13 +72,7 @@ public class Player : MonoBehaviour, IDamagable
 
     private void Awake()
     {
-        Collider[] colliders = GetComponentsInChildren<Collider>();
-        foreach (Collider collider in colliders)
-        {
-            playerCollider = collider;
-            break;
-        }
-        
+        playerCollider = GetComponentsInChildren<Collider>();
         animator = GetComponent<Animator>();
     }
 
@@ -111,7 +109,8 @@ public class Player : MonoBehaviour, IDamagable
 
     public void Player_End_Collision()
     {
-        playerCollider.enabled = false;
+        foreach(Collider collider in playerCollider)
+        collider.enabled = false;
     }
 
 #region Move
