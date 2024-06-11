@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
+    [SerializeField]
+    public DoActionData doActionData;
+
     private Collider swordCollider;
     private GameObject rootObject;
     private List<GameObject> gameObjList;
@@ -33,7 +36,7 @@ public class Sword : MonoBehaviour
         gameObjList.Add(other.gameObject);
 
         IDamagable damage = other.gameObject.GetComponent<IDamagable>();
-        damage?.Damage(rootObject, 20);
+        damage?.Damage(rootObject, 20, doActionData);
     }
 
         public void Begin_Collision()

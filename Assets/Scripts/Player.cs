@@ -42,9 +42,9 @@ public class Player : MonoBehaviour, IDamagable
 
     private Collider[] playerCollider;
     private Animator animator;
-    public void Damage(GameObject attacker, float power)
+    public void Damage(GameObject attacker, float power, DoActionData doAction)
     {
-        hp = hp - power;
+        hp = hp - doAction.power;
 
         if (hp <= 0)
         {

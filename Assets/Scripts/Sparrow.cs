@@ -26,10 +26,17 @@ public partial class Sparrow : MonoBehaviour, IDamagable
 
     private Animator animator;
 #region Damage
-    public void Damage(GameObject attacker, float power)
+    public void Damage(GameObject attacker, float power, DoActionData doAction)
     {
-        hp = hp - power;
-        PushBack();
+        hp = hp - doAction.power;
+        PushBack(doAction.distance);
+
+        if (doAction.hitParticle != null)
+        {
+            GameObject obj = Instantiate(doAction.hitParticle, transform, false);
+            obj.transform.localPosition = doAction.hitParticlePositionOffset;
+            obj.transform.localScale = doAction.hitParticleScaleOffset;
+        }
 
         if (hp<=0)
         {
@@ -104,7 +111,7 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     #endregion
 
 
-    #region   PlayerTracker
+ #region   PlayerTracker
     private Transform playerLastPosition;
     private void PlayerTracker()
     {
@@ -180,11 +187,11 @@ public partial class Sparrow : MonoBehaviour, IDamagable
     {
         hitted = false;
     }
-    private void PushBack()
+    private void PushBack(float distance)
     {
         rigidbody.isKinematic = false;
         rigidbody.velocity = Vector3.zero;
-        rigidbody.AddForce(transform.forward * -1f * 20, ForceMode.Force);
+        rigidbody.AddForce(transform.forward * -1f * distance, ForceMode.Force);
         CancelInvoke("IsKinematicTrue");
         Invoke("IsKinematicTrue", 0.3f);
     }

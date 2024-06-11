@@ -7,6 +7,8 @@ public class SparrowAttack : MonoBehaviour
     // 본인 콜라이더 끄는, 키는 기능 o
     // 플레이어 hp 만들기 , dead 만들기 피
     // 
+    [SerializeField]
+    public DoActionData doActionData;
 
     private List<Collider> sparrowColliders;
     private Collider sparrowAttackCollider;
@@ -42,7 +44,7 @@ public class SparrowAttack : MonoBehaviour
             return;
 
         IDamagable damage = other.gameObject.GetComponent<IDamagable>();
-        damage?.Damage(gameObject, 20);
+        damage?.Damage(gameObject, 20, doActionData);
     }
 
     public void Begin_Collision()

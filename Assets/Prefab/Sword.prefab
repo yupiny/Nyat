@@ -9771,6 +9771,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490956e3c85b2640b7db930604fd0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doActionData:
+    power: 20
+    stopFrame: 3
+    distance: 20
+    hitAudioClip: {fileID: 0}
+    hitParticle: {fileID: 6675302182551818641, guid: 155588276eb249a45bfe645b85fbd68d, type: 3}
+    hitParticlePositionOffset: {x: 0, y: 0.5, z: 0}
+    hitParticleScaleOffset: {x: 1, y: 1, z: 1}
 --- !u!1 &3100430565335585173
 GameObject:
   m_ObjectHideFlags: 0
