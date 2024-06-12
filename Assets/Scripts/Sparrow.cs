@@ -121,15 +121,24 @@ public partial class Sparrow : MonoBehaviour, IDamagable
         if (attacking == true)
             return;
 
+        // 참새 collider[] 얻어옴
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius, 1 << 6);
         Debug.Log("colliders 탐색" + colliders.Length);
         if (colliders.Length == 0)
         {
+            // 이전에 타겟이 있었는데 없어졌다면
+            if(hasTarget)
+            {
+                MoveToRandomPositionAndResetTarget();
+                return;
+            }
+
             hasTarget = false;
             targetObject = null;
         }
         else
         { 
+            // 플레이어를 타겟으로 설정
             foreach (Collider collider in colliders)
             {
                 targetObject = collider.gameObject;
